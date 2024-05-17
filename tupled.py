@@ -1,4 +1,6 @@
 import random
+import matplotlib.pyplot as plt
+import time
 def main():
     print("Welcome to the tupled out game")
     players = 0
@@ -11,11 +13,19 @@ def main():
         print("1 or more players required. Please try again.")
         return
     scores = []
+    time.sleep(0.5)
     for i in range(players):
         scores.append(0)
         dice_values = [[0, False], [0, False], [0, False]]
         done_rolling = False
         print(f"\n\nRolling for Player #{i+1}...")
+        time.sleep(0.5)
+        print('...')
+        time.sleep(0.3)
+        print('...')
+        time.sleep(0.3)
+        print('...')
+        time.sleep(0.5)
         while not done_rolling:
             roll_values = [random.randint(1,6),random.randint(1,6),random.randint(1,6)]
             string = "\n"
@@ -29,6 +39,7 @@ def main():
                 tupled_out = True
                 done_rolling = True
                 scores[i] = 0
+                time.sleep(1.5)
                 
             else:
                 if dice_values[0][0] == dice_values[1][0]:
@@ -45,9 +56,10 @@ def main():
                     if dice_values[1][1] != True and dice_values[2][1] != True:
                         print("Dice 2 and 3 are now fixed!")
                     dice_values[1][1] = True
-                    dice_values[2][1] = True
+                    dice_values[2][1] = True 
+                time.sleep(0.8)
                 print("---")
-                print("Current dice values: ")
+                print(f"Current dice values (player {i+1}): ")
                 total = 0
                 for z in range(len(dice_values)):
                     fixed = "yes" if dice_values[z][1] else "no"
@@ -60,9 +72,18 @@ def main():
                         scores[i] += dice_values[z][0]
                     done_rolling = True
                 else:
-                    print("Re-rolling...")        
-
+                    print("Re-rolling...")      
+                    time.sleep(0.7)
+  
+    x = []
     for i in range(players):
         print(f"Player #{i+1}: Score: {scores[i]}")
+        x.append(f"Player {i+1}")
+    bar = plt.bar(x, scores, color="red")
+    bar[scores.index(max(scores))].set_color('gold')
+    plt.title("Tupled Out Final Scores")
+    print("Displaying final scores (close program when done)")
+    plt.show()
+    return
 
 main()
